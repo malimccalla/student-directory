@@ -33,17 +33,15 @@ def print_header
 end
 
 def print_names(students)
-  @filtered = []
-  students.each_with_index do |student, index|
-    if student[:name].length < 12
-      @filtered << "#{index+1}.#{student[:name]} (#{student[:cohort]} cohort)"
-    end
+  index = 0
+  while index < students.length
+    puts "#{index+1}.#{students[index][:name]} (#{students[index][:cohort]} cohort)"
+    index += 1
   end
-  puts @filtered
 end
 
 def print_footer(students)
-  puts "We have #{@filtered.length} students whose names are longer than 12 and #{students.length} students overall"
+  puts "Overall we #{students.length} great students"
 end
 
 students = input_students

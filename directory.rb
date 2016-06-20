@@ -34,9 +34,8 @@ end
 
 def print_names(students)
   @filtered = []
-  @letter = "M"
   students.each_with_index do |student, index|
-    if student[:name].each_char.first == @letter
+    if student[:name].length < 12
       @filtered << "#{index+1}.#{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
@@ -44,7 +43,7 @@ def print_names(students)
 end
 
 def print_footer(students)
-  puts "We have #{@filtered.length} students whose names begin with '#{@letter}' and #{students.length} students Overall"
+  puts "We have #{@filtered.length} students whose names are longer than 12 and #{students.length} students overall"
 end
 
 students = input_students

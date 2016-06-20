@@ -33,13 +33,18 @@ def print_header
 end
 
 def print_names(students)
+  @filtered = []
+  @letter = "M"
   students.each_with_index do |student, index|
-    puts "#{index+1}.#{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].each_char.first == @letter
+      @filtered << "#{index+1}.#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
+  puts @filtered
 end
 
 def print_footer(students)
-  puts "Overall we have #{students.length} great students"
+  puts "We have #{@filtered.length} students whose names begin with '#{@letter}' and #{students.length} students Overall"
 end
 
 students = input_students

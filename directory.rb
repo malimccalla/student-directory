@@ -40,7 +40,11 @@ def input_students
       country = gets.chomp
     end
     students << {name: name, cohort: cohort, country: country}
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have #{students.count} student."
+    else
+      puts "Now we have #{students.count} students."
+    end
     puts "Please enter next students name or hit enter to end."
     name = gets.chomp
   end

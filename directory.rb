@@ -19,12 +19,19 @@ def input_students
   puts "To finish, just hit return twice"
   students = []
   name = gets.chomp
+  puts "You input '#{name}' is this correct? (y/n)"
+  spell = gets.chomp.downcase
+  while spell == "n"
+    puts "Please enter the correct spelling:"
+    name = gets.chomp
+    puts "You input '#{name}' is this correct? (y/n)"
+    spell = gets.chomp.downcase
+  end
   while !name.empty? do
     puts "Please enter the students cohort"
     cohort = gets.chomp
-    while cohort.empty? do
-      puts "You must enter a cohort: "
-      cohort = gets.chomp
+    if cohort.empty?
+      cohort = "July".to_sym
     end
     puts "Please enter the students birth country"
     country = gets.chomp

@@ -48,7 +48,14 @@ def input_students
     puts "Please enter next students name or hit enter to end."
     name = gets.delete("\n")
   end
-  students
+  if students.count < 1
+    puts "-"*50
+    puts "No students were entered. Quitting program".center(50)
+    puts '-'*50
+    exit
+  else
+    students
+  end
 end
 
 def print_header

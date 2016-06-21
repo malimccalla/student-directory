@@ -54,8 +54,15 @@ def print_header
 end
 
 def print_names(students)
-  students.each_with_index do |student, index|
-    puts "#{index+1}.#{student[:name]} (#{student[:cohort]}). Country of birth: #{student[:country]}"
+  cohort_sorted = students.group_by {|e| e[:cohort]}
+  cohort_sorted.each do |k,v|
+    puts '-'*50
+    puts "#{k}: ".center(50)
+    puts ''
+    v.each do |student|
+      puts "#{student[:name]}"
+      puts ''
+    end
   end
 end
 

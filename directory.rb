@@ -1,45 +1,28 @@
-#first we print the list of students
-
-# students = [
-#  {name: "Dr. Hannibal Lecter", cohort: :november},
-#  {name: "Darth Vader", cohort: :november},
-#  {name: "Nurse Ratched", cohort: :november},
-#  {name: "Michael Corleone", cohort: :november},
-#  {name: "Alex Delarge", cohort: :november},
-#  {name: "The Wicked Witch Of The West", cohort: :november},
-#  {name: "Terminator", cohort: :november},
-#  {name: "Freddy Krueger", cohort: :november},
-#  {name: "The Joker", cohort: :november},
-#  {name: "Joffrey Baratheon", cohort: :november},
-#  {name: "Norman Bates", cohort: :november},
-# ]
-
 @students = []
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  #@students = []
-  name = gets.chomp
+  name = STDIN.gets.chomp
   while !name.empty? do
     puts "You input '#{name}' is this correct? (y/n)"
-    spell = gets.chomp.downcase
+    spell = STDIN.gets.chomp.downcase
     while spell == "n"
       puts "Please enter the correct spelling:"
-      name = gets.chomp
+      name = STDIN.gets.chomp
       puts "You input '#{name}' is this correct? (y/n)"
-      spell = gets.chomp.downcase
+      spell = STDIN.gets.chomp.downcase
     end
     puts "Please enter the students cohort"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     if cohort.empty?
       cohort = "July".to_sym
     end
     puts "Please enter the students birth country"
-    country = gets.chomp
+    country = STDIN.gets.chomp
     while country.empty? do
       puts "You must enter a country of birth"
-      country = gets.chomp
+      country = STDIN.gets.chomp
     end
     @students << {name: name, cohort: cohort, country: country}
     if @students.count == 1
@@ -48,15 +31,13 @@ def input_students
       puts "Now we have #{@students.count} students."
     end
     puts "Please enter next students name or hit enter to end."
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
   if @students.count < 1
     puts "-"*50
     puts "No students were entered. Quitting program".center(50)
     puts '-'*50
     exit
-  # else
-  #   students
   end
 end
 
@@ -78,7 +59,7 @@ def interactive_menu
   #@students = []
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -98,8 +79,6 @@ def process(selection)
       puts "I don't know what you mean, try again"
   end
 end
-
-
 
 def print_header
   puts "-"*50
@@ -134,13 +113,27 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open('students.csv','r')
+def load_students(filename = "students.csv")
+  file = File.open(filename,'r')
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym}
   end
+  file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry #{filename} doesn't not exist"
+    exit
+  end
+end
 
+#puts ARGV.inspect
+try_load_students
 interactive_menu

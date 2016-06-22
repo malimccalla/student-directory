@@ -68,7 +68,7 @@ end
 
 def show_students
   print_header
-  print_names#(students)
+  print_students_list#(students)
   print_footer#(students)
 end
 
@@ -76,8 +76,12 @@ def interactive_menu
   #@students = []
   loop do
     print_menu
-    selection = gets.chomp
-    case selection
+    process(gets.chomp)
+  end
+end
+
+def process(selection)
+  case selection
     when "1"
       input_students
     when "2"
@@ -85,11 +89,10 @@ def interactive_menu
     when "9"
       exit
     else
-      puts "I don't know what you mean, try again."
-    end
+      puts "I don't know what you mean, try again"
   end
-
 end
+
 
 
 def print_header
@@ -98,7 +101,7 @@ def print_header
   puts "-"*50
 end
 
-def print_names#(students)
+def print_students_list#(students)
   cohort_sorted = @students.group_by {|e| e[:cohort]}
   cohort_sorted.each do |k,v|
     puts '-'*50

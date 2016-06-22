@@ -14,65 +14,74 @@
 #  {name: "Norman Bates", cohort: :november},
 # ]
 
+@students = []
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  students = []
-  name = gets.delete("\n")
+  #@students = []
+  name = gets.chomp
   while !name.empty? do
     puts "You input '#{name}' is this correct? (y/n)"
-    spell = gets.delete("\n").downcase
+    spell = gets.chomp.downcase
     while spell == "n"
       puts "Please enter the correct spelling:"
-      name = gets.delete("\n")
+      name = gets.chomp
       puts "You input '#{name}' is this correct? (y/n)"
-      spell = gets.delete("\n").downcase
+      spell = gets.chomp.downcase
     end
     puts "Please enter the students cohort"
-    cohort = gets.delete("\n")
+    cohort = gets.chomp
     if cohort.empty?
       cohort = "July".to_sym
     end
     puts "Please enter the students birth country"
-    country = gets.delete("\n")
+    country = gets.chomp
     while country.empty? do
       puts "You must enter a country of birth"
-      country = gets.delete("\n")
+      country = gets.chomp
     end
-    students << {name: name, cohort: cohort, country: country}
-    if students.count == 1
-      puts "Now we have #{students.count} student."
+    @students << {name: name, cohort: cohort, country: country}
+    if @students.count == 1
+      puts "Now we have #{@students.count} student."
     else
-      puts "Now we have #{students.count} students."
+      puts "Now we have #{@students.count} students."
     end
     puts "Please enter next students name or hit enter to end."
-    name = gets.delete("\n")
+    name = gets.chomp
   end
-  if students.count < 1
+  if @students.count < 1
     puts "-"*50
     puts "No students were entered. Quitting program".center(50)
     puts '-'*50
     exit
-  else
-    students
+  # else
+  #   students
   end
 end
 
-def interactive_menu
-  students = []
-  loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
 
+def show_students
+  print_header
+  print_names#(students)
+  print_footer#(students)
+end
+
+def interactive_menu
+  #@students = []
+  loop do
+    print_menu
     selection = gets.chomp
     case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header
-      print_names(students)
-      print_footer(students)
+      show_students
     when "9"
       exit
     else
@@ -89,8 +98,8 @@ def print_header
   puts "-"*50
 end
 
-def print_names(students)
-  cohort_sorted = students.group_by {|e| e[:cohort]}
+def print_names#(students)
+  cohort_sorted = @students.group_by {|e| e[:cohort]}
   cohort_sorted.each do |k,v|
     puts '-'*50
     puts "#{k}: ".center(50)
@@ -102,8 +111,8 @@ def print_names(students)
   end
 end
 
-def print_footer(students)
-  puts "Overall we #{students.length} great students"
+def print_footer#(students)
+  puts "Overall we #{@students.length} great students"
 end
 
 interactive_menu

@@ -1,29 +1,11 @@
 @students = []
 
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  name = STDIN.gets.chomp
+  name = get_name
   while !name.empty? do
-    puts "You input '#{name}' is this correct? (y/n)"
-    spell = STDIN.gets.chomp.downcase
-    while spell == "n"
-      puts "Please enter the correct spelling:"
-      name = STDIN.gets.chomp
-      puts "You input '#{name}' is this correct? (y/n)"
-      spell = STDIN.gets.chomp.downcase
-    end
-    puts "Please enter the students cohort"
-    cohort = STDIN.gets.chomp
-    if cohort.empty?
-      cohort = "July".to_sym
-    end
-    puts "Please enter the students birth country"
-    country = STDIN.gets.chomp
-    while country.empty? do
-      puts "You must enter a country of birth"
-      country = STDIN.gets.chomp
-    end
+    name = name_spell_check(name)
+    cohort = get_cohort
+    country = get_country
     @students << {name: name, cohort: cohort, country: country}
     if @students.count == 1
       puts "Now we have #{@students.count} student."
@@ -33,12 +15,7 @@ def input_students
     puts "Please enter next students name or hit enter to end."
     name = STDIN.gets.chomp
   end
-  if @students.count < 1
-    puts "-"*50
-    puts "No students were entered. Quitting program".center(50)
-    puts '-'*50
-    exit
-  end
+  no_students
 end
 
 def print_menu
@@ -49,10 +26,56 @@ def print_menu
   puts "9. Exit"
 end
 
+def get_name
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  name = STDIN.gets.chomp
+end
+
+def name_spell_check(name)
+  puts "You input '#{name}' is this correct? (y/n)"
+  spell = STDIN.gets.chomp.downcase
+  while spell == "n"
+    puts "Please enter the correct spelling:"
+    name = STDIN.gets.chomp
+    puts "You input '#{name}' is this correct? (y/n)"
+    spell = STDIN.gets.chomp.downcase
+  end
+  name
+end
+
+def get_cohort
+  puts "Please enter the students cohort"
+  cohort = STDIN.gets.chomp
+  if cohort.empty?
+    cohort = "July".to_sym
+  end
+  cohort
+end
+
+def get_country
+  puts "Please enter the students birth country"
+  country = STDIN.gets.chomp
+  while country.empty? do
+    puts "You must enter a country of birth"
+    country = STDIN.gets.chomp
+  end
+  country
+end
+
 def show_students
   print_header
   print_names#(students)
   print_footer#(students)
+end
+
+def no_students
+  if @students.count < 1
+    puts "-"*50
+    puts "No students were entered. Quitting program".center(50)
+    puts '-'*50
+    exit
+  end
 end
 
 def interactive_menu

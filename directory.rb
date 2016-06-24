@@ -157,6 +157,7 @@ def try_load_students
   end
 end
 
+load_students
 #puts ARGV.inspect
 try_load_students
 interactive_menu

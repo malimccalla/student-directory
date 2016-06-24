@@ -91,12 +91,20 @@ def process(selection)
     when "1"
       input_students
     when "2"
+      puts "Now showing students"
       show_students
     when "3"
       save_students
+      puts ""
+      puts "3 selected - Students saved"
+      puts
     when "4"
       load_students
+      puts
+      puts "4 selected - Students loaded"
+      puts
     when "9"
+      "Bye"
       exit
     else
       puts "I don't know what you mean, try again"

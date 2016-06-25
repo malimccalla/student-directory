@@ -136,13 +136,13 @@ def print_footer#(students)
 end
 
 def save_students
-  file = File.open(set_filename, 'w')
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts(csv_line)
+  File.open(set_filename, 'w') do |f|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      f.puts(csv_line)
+    end
   end
-  file.close
 end
 
 def set_filename
@@ -151,21 +151,21 @@ def set_filename
 end
 
 def load_students(filename = set_filename)
-  file = File.open(filename,'r')
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+  File.open(filename,'r') do |f|
+    f.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      @students << {name: name, cohort: cohort.to_sym}
+    end
   end
-  file.close
 end
 
 def default_load
-  file = File.open('students.csv','r')
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+  File.open('students.csv','r') do |f|
+    f.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      @students << {name: name, cohort: cohort.to_sym}
+    end
   end
-  file.close
 end
 
 def try_load_students
@@ -181,6 +181,6 @@ def try_load_students
 end
 
 #load_students
-#puts ARGV.inspect
+# #puts ARGV.inspect
 try_load_students
 interactive_menu

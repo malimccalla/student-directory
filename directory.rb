@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 @filename = 'students.csv'
 
@@ -66,8 +67,8 @@ end
 
 def show_students
   print_header
-  print_names#(students)
-  print_footer#(students)
+  print_names
+  print_footer
 end
 
 def no_students
@@ -80,7 +81,6 @@ def no_students
 end
 
 def interactive_menu
-  #@students = []
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -118,7 +118,7 @@ def print_header
   puts "-"*50
 end
 
-def print_names#(students)
+def print_names
   cohort_sorted = @students.group_by {|e| e[:cohort]}
   cohort_sorted.each do |k,v|
     puts '-'*50
@@ -131,16 +131,14 @@ def print_names#(students)
   end
 end
 
-def print_footer#(students)
+def print_footer
   puts "Overall we #{@students.length} great students"
 end
 
 def save_students
-  File.open(set_filename, 'w') do |f|
+  CSV.open(set_filename, 'w') do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      f.puts(csv_line)
+      csv << [student[:name], student[:cohort]]
     end
   end
 end
@@ -151,20 +149,16 @@ def set_filename
 end
 
 def load_students(filename = set_filename)
-  File.open(filename,'r') do |f|
-    f.readlines.each do |line|
-      name, cohort = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym}
-    end
+  CSV.foreach(filename,'r') do |f|
+    name, cohort = f
+    @students << {name: name, cohort: cohort.to_sym}
   end
 end
 
 def default_load
-  File.open('students.csv','r') do |f|
-    f.readlines.each do |line|
-      name, cohort = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym}
-    end
+  CSV.foreach('students.csv','r') do |f|
+    name, cohort = f
+    @students << {name: name, cohort: cohort.to_sym}
   end
 end
 

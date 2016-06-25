@@ -1,9 +1,4 @@
-def code_reader
-  File.open(__FILE__,'r') { |f| puts f.readlines }
-end
-
-code_reader
-
+File.open(__FILE__,'r') { |f| puts f.readlines }
 =begin
 ───────▄▀▀▀▀▀▀▀▀▀▀▄▄
 ────▄▀▀░░░░░░░░░░░░░▀▄

@@ -1,4 +1,4 @@
-File.open(__FILE__,'r') { |f| puts f.readlines }
+puts File.read(__FILE__)
 =begin
 ───────▄▀▀▀▀▀▀▀▀▀▀▄▄
 ────▄▀▀░░░░░░░░░░░░░▀▄
